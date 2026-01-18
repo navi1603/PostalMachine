@@ -51,4 +51,7 @@ public class PostCell {
         shipmentStatus = ShipmentStatus.WORK;
     }
 
+    public Shipment getShipment() {
+        return shipment;
+    }
 }

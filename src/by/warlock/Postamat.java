@@ -13,22 +13,26 @@ public class Postamat {
         this.postCells = postCells;
     }
 
-    public void putShipment(Shipment shipment) {
+    public int putShipment(Shipment shipment) {
         for (int i = 0; i < postCells.length; i++) {
-            if (postCells[i] == null) {
+            if (postCells[i].hasShipment() == false) {
                 postCells[i].putShipment(shipment);
-                break;
+                return i;
             }
         }
+        return -1;
     }
 
     public PostCell getShipment(int numberOfCell) {
-
-        return null;
+        return postCells[numberOfCell];
     }
 
     public double weightAllShipments() {
-        return 0;
+        double weight = 0;
+        for (PostCell postCell : postCells) {
+            weight += postCell.getShipment().weight();
+        }
+        return weight;
     }
 
 }
