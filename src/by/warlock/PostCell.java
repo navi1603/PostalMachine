@@ -5,13 +5,13 @@ public class PostCell {
     private PostCellStatus postCellStatus;
     private Shipment shipment;
 
-    public PostCell(Dimensions dimensions, PostCellStatus postCellStatus) {
+    public PostCell(Dimensions dimensions) {
         this.dimensions = dimensions;
-        this.postCellStatus = postCellStatus;
+        this.postCellStatus = PostCellStatus.WORK;
     }
 
     public boolean hasShipment() {
-        return (shipment == null) ? false : true;
+        return (shipment != null);
     }
 
     public boolean canAcceptShipment(Shipment shipment) {
