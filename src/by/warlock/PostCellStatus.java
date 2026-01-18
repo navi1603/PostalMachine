@@ -1,6 +1,6 @@
 package by.warlock;
 
-public enum ShipmentStatus {
+public enum PostCellStatus {
     WORK,
     AT_MAINTENANCE
 }

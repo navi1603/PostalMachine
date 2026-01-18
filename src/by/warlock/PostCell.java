@@ -1,13 +1,13 @@
 package by.warlock;
 
 public class PostCell {
-    private Dimensions dimensions;
-    private ShipmentStatus shipmentStatus;
+    private final Dimensions dimensions;
+    private PostCellStatus postCellStatus;
     private Shipment shipment;
 
-    public PostCell(Dimensions dimensions, ShipmentStatus shipmentStatus) {
+    public PostCell(Dimensions dimensions, PostCellStatus postCellStatus) {
         this.dimensions = dimensions;
-        this.shipmentStatus = shipmentStatus;
+        this.postCellStatus = postCellStatus;
     }
 
     public boolean hasShipment() {
@@ -16,8 +16,8 @@ public class PostCell {
 
     public boolean canAcceptShipment(Shipment shipment) {
         if(this.shipment == null &&
-                shipmentStatus == ShipmentStatus.WORK &&
-                dimensions.length() > shipment.dimensions().length() &&
+                postCellStatus == PostCellStatus.WORK &&
+                dimensions.height() > shipment.dimensions().height() &&
                 dimensions.depth() > shipment.dimensions().depth() &&
                 dimensions.width() > shipment.dimensions().width()) {
             return true;
@@ -25,11 +25,10 @@ public class PostCell {
         return false;
     }
 
-    public int putShipment(Shipment shipment) {
+    public void putShipment(Shipment shipment) {
         if(canAcceptShipment(shipment)) {
             this.shipment = shipment;
         }
-        return 0;
     }
 
     public Shipment extractShipment() {
@@ -43,12 +42,12 @@ public class PostCell {
 
     public void turnMaintenanceMode() {
         if(!hasShipment()) {
-            shipmentStatus = ShipmentStatus.AT_MAINTENANCE;
+            postCellStatus = PostCellStatus.AT_MAINTENANCE;
         }
     }
 
     public void turnWorkingMode() {
-        shipmentStatus = ShipmentStatus.WORK;
+        postCellStatus = PostCellStatus.WORK;
     }
 
     public Shipment getShipment() {

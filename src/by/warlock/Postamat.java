@@ -30,7 +30,9 @@ public class Postamat {
     public double weightAllShipments() {
         double weight = 0;
         for (PostCell postCell : postCells) {
-            weight += postCell.getShipment().weight();
+            if(postCell.hasShipment() == true) {
+                weight += postCell.getShipment().weight();
+            }
         }
         return weight;
     }
