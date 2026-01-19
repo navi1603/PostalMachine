@@ -1,5 +1,7 @@
 package by.warlock;
 
+import java.math.BigDecimal;
+
 public class PostCell {
     private final Dimensions dimensions;
     private PostCellStatus postCellStatus;
@@ -15,27 +17,29 @@ public class PostCell {
     }
 
     public boolean canAcceptShipment(Shipment shipment) {
-        if(this.shipment == null &&
-                postCellStatus == PostCellStatus.WORK &&
-                dimensions.height() > shipment.dimensions().height() &&
-                dimensions.depth() > shipment.dimensions().depth() &&
-                dimensions.width() > shipment.dimensions().width()) {
-            return true;
+        if(hasShipment()) {
+            return false;
         }
-        return false;
+        if(postCellStatus != PostCellStatus.WORK) {
+            return false;
+        }
+        return dimensions.canHold(shipment.dimensions());
     }
 
-    public void putShipment(Shipment shipment) {
-        if(canAcceptShipment(shipment)) {
-            this.shipment = shipment;
+    public boolean putShipment(Shipment shipment) {
+        if(!canAcceptShipment(shipment)) {
+            System.out.println("Посылка не подходит по размерам ячейки " + this);
+            return false;
         }
+        this.shipment = shipment;
+        return false;
     }
 
     public Shipment extractShipment() {
         Shipment extractedShipment = null;
         if(hasShipment()) {
-            extractedShipment = shipment;
-            shipment = null;
+            extractedShipment = this.shipment;
+            this.shipment = null;
         }
         return extractedShipment;
     }
@@ -43,6 +47,8 @@ public class PostCell {
     public void turnMaintenanceMode() {
         if(!hasShipment()) {
             postCellStatus = PostCellStatus.AT_MAINTENANCE;
+        } else {
+            System.out.println("Невозможно поставить на обслуживание - в ячейке находится посылка.");
         }
     }
 
@@ -50,7 +56,7 @@ public class PostCell {
         postCellStatus = PostCellStatus.WORK;
     }
 
-    public Shipment getShipment() {
-        return shipment;
+    public BigDecimal shipmentWeight() {
+        return shipment.weight();
     }
 }

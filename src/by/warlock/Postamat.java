@@ -1,8 +1,10 @@
 package by.warlock;
 
+import java.math.BigDecimal;
+
 public class Postamat {
     private int numberOfCell;
-    private PostCell[] postCells;
+    private final PostCell[] postCells;
 
 
     public Postamat() {
@@ -13,28 +15,33 @@ public class Postamat {
         this.postCells = postCells;
     }
 
-    public int putShipment(Shipment shipment) {
+    public Integer putShipment(Shipment shipment) {
         for (int i = 0; i < postCells.length; i++) {
-            if (postCells[i].hasShipment() == false) {
-                postCells[i].putShipment(shipment);
+            if (postCells[i].canAcceptShipment(shipment)) {
+                if(postCells[i].putShipment(shipment)) {
+                    System.out.println("Посылка размещена в ячейке");
+                }
                 return i;
             }
         }
-        return -1;
+        System.out.println("Не удалось разместить посылку в ячейке");
+        return null;
     }
 
-    public PostCell getShipment(int numberOfCell) {
-        return postCells[numberOfCell];
+    public Shipment getShipment(int numberOfCell) {
+        if(numberOfCell < 0 || numberOfCell >= postCells.length) {
+            System.out.println("Ячейка с этим номером не найдена");
+        }
+        return postCells[numberOfCell].extractShipment();
     }
 
-    public double weightAllShipments() {
-        double weight = 0;
+    public BigDecimal weightAllShipments() {
+        BigDecimal weight = new BigDecimal("0");
         for (PostCell postCell : postCells) {
-            if(postCell.hasShipment() == true) {
-                weight += postCell.getShipment().weight();
+            if(postCell.hasShipment()) {
+                weight = weight.add(postCell.shipmentWeight());
             }
         }
         return weight;
     }
-
 }

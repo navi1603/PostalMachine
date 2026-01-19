@@ -1,4 +1,6 @@
 package by.warlock;
 
-public record Shipment(Dimensions dimensions, double weight, String description) {
+import java.math.BigDecimal;
+
+public record Shipment(Dimensions dimensions, BigDecimal weight, String description) {
 }
