@@ -1,21 +1,23 @@
 package by.warlock;
 
+import java.math.BigDecimal;
+
 public class Main {
    public static void main(String[] args) {
         PostCell[] postCells = {
-                new PostCell(new Dimensions(10.5, 5, 5), PostCellStatus.WORK),
-                new PostCell(new Dimensions(10.5, 5, 5), PostCellStatus.WORK),
-                new PostCell(new Dimensions(10.5, 5, 5), PostCellStatus.WORK),
-                new PostCell(new Dimensions(10.5, 5, 5), PostCellStatus.WORK),
-                new PostCell(new Dimensions(10.5, 5, 5), PostCellStatus.WORK)
+                new PostCell(new Dimensions(new BigDecimal("10.5"), new BigDecimal("5"), new BigDecimal("3"))),
+                new PostCell(new Dimensions(new BigDecimal("10.5"), new BigDecimal("5"), new BigDecimal("3"))),
+                new PostCell(new Dimensions(new BigDecimal("10.5"), new BigDecimal("5"), new BigDecimal("3"))),
+                new PostCell(new Dimensions(new BigDecimal("10.5"), new BigDecimal("5"), new BigDecimal("3"))),
+                new PostCell(new Dimensions(new BigDecimal("10.5"), new BigDecimal("5"), new BigDecimal("3")))
         };
         Postamat postamat = new Postamat(postCells);
 
-        Shipment shipment1 = new Shipment(new Dimensions(5.5, 3, 2), 0.5, "From AliExpress");
-        Shipment shipment2 = new Shipment(new Dimensions(5.5, 3, 2), 2, "From AliExpress");
-        Shipment shipment3 = new Shipment(new Dimensions(12, 6, 2), 0.5, "From AliExpress");
-        Shipment shipment4 = new Shipment(new Dimensions(13, 5, 7), 1, "From AliExpress");
-        Shipment shipment5 = new Shipment(new Dimensions(10, 4.5, 2), 0.5, "From AliExpress");
+        Shipment shipment1 = new Shipment(new Dimensions(new BigDecimal("8.5"), new BigDecimal("4"), new BigDecimal("1"), 1, "From AliExpress");
+        Shipment shipment2 = new Shipment(new Dimensions(new BigDecimal("9.5"), new BigDecimal("1"), new BigDecimal("2"), 0.7, "From AliExpress");
+        Shipment shipment3 = new Shipment(new Dimensions(new BigDecimal("11.5"), new BigDecimal("5.2"), new BigDecimal("2.5"), 0.3, "From AliExpress");
+        Shipment shipment4 = new Shipment(new Dimensions(new BigDecimal("12.5"), new BigDecimal("7"), new BigDecimal("7"), 0.5, "From AliExpress");
+        Shipment shipment5 = new Shipment(new Dimensions(new BigDecimal("10"), new BigDecimal("4,9"), new BigDecimal("3"), 0.5, "From AliExpress");
 
         int index1 = postamat.putShipment(shipment1);
         int index2 = postamat.putShipment(shipment2);
